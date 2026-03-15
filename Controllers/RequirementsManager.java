@@ -27,6 +27,7 @@ public class RequirementsManager {
         if (req == null){
             return;
         }
+        requirements.add(req);
     }
     public List<TeachingRequirement> getAllRequirements(){
         return new ArrayList<>(requirements);

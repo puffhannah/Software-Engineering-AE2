@@ -40,16 +40,16 @@ public class Teacher {
     }
 
     public String getName(){return name;}
-    public String setName(String name){this.name=name;}
+    public void tName(String name){this.name=name;}
     public int getid(){return id;}
     public String getTrainingStatus(){return training_status;}
     public void setTrainingStatus(String status){this.training_status= status;}
     public String getSkills(){return skills;}
-    public String setSkills(String skills){this.skills=skills;}
+    public void setSkills(String skills){this.skills=skills;}
     
     @Override
     public String toString(){
-        return String.format("[ID %d]%s,| Skills %s| Training Status %s",id,skills,training_status);
+        return String.format("[ID %d]%s,| Name %s| Skills %s| Training Status %s",id,name,skills,training_status);
     }
 
 

@@ -109,7 +109,16 @@ public class CommandLineInterface {
     }
 
     private void optionUpdateTeacher(){
-
+        System.out.println("Enter the ID of the teacher profile you would like to UPDATE: ");
+        // This is incomplete, just put logics that TeacherManager class needs (esp the booleans)
+        Teacher updatedTeacher = new Teacher(id, name, skills, trainingStatus);
+        boolean success = teacherManager.updateTeacher(id, updatedTeacher);
+        if (success) {
+            System.out.println("Teacher profile updated successfully.");
+        }
+        else {
+            System.out.println("Teacher profile not found. Failed to update teacher profile.")
+        }
     }
 
     private void optionAssignTeacher() {
@@ -126,6 +135,12 @@ public class CommandLineInterface {
 
         System.out.println(teacher);
 
+        if (teacher == null) {
+            System.out.println("Teacher not found.");
+            }
+        else {
+            System.out.println(teacher);
+        }
 
     }
 

@@ -110,6 +110,10 @@ public class CommandLineInterface {
         if (!success) {
             System.out.println("Teacher ID already exists in the system. Failed to add teacher.");
         }
+        else {
+            // Success message feedback to user
+            System.out.println("New teacher added successfully.");
+        }
     }
 
     private void optionUpdateTeacher(){

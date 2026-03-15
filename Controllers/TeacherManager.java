@@ -58,8 +58,6 @@ public class TeacherManager {
         teachers.add(teacher);
         // Save updated list to CSV
         FileHandler.saveTeachers("teacher.csv", teachers);
-        // Success message feedback to user
-        System.out.println("New teacher added successfully.");
         return true;
     }
     

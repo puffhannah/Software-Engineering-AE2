@@ -1,7 +1,10 @@
-package Utils;
+package Controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import Models.Teacher;
+import Models.TeachingRequirement;
 
 /**
 *Utils.RequirementsManager class consists:

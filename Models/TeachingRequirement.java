@@ -1,3 +1,4 @@
+package Models;
 //getCourseName() returns course name
 //setCourseName(String name) sets course name
 //getSkillsNeeded() returns required skills
@@ -36,7 +37,7 @@ public class TeachingRequirement {
     public String getSkillsNeeded() {
         return skillsNeeded;
     }
-    public void setSkillsNeeded(String needed) {
+    public void setSkillsNeeded(String skills) {
         this.skillsNeeded = skills;
     }
     public int getHours() {
@@ -46,8 +47,12 @@ public class TeachingRequirement {
         this.hours = hours;
     }
     public Teacher getAssignedTeacher() {
-        return assignedTeacher = teacher;
+        return assignedTeacher;
     }
+    public void setAssignedTeacher(Teacher teacher) {
+        this.assignedTeacher = teacher;
+    }
+
     @Override
     public String toString(){
         String teacherInfo = (assignedTeacher ==null)

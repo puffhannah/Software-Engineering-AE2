@@ -23,6 +23,15 @@ public class RequirementsManager {
         if (req == null){
             return;
         }
+        if(getRequirement(req.getId()) ==null){
+            requirements.add(req);
+        }
+    }
+    public TeachingRequirement addRequirement(String courseName, String skillsNeeded, int hours) {
+        int newId = getNextRequirementId();
+        TeachingRequirement req = new TeachingRequirement(newId, courseName, skillsNeeded, hours);
+        addRequirement(req);
+        return req;
     }
     public List<TeachingRequirement> getAllRequirements(){
         return new ArrayList<>(requirements);
@@ -51,5 +60,15 @@ public class RequirementsManager {
         if(requirement!=null){
             requirement.setAssignedTeacher(teacher);
         }
+    }
+    //added this to find the next available Id.
+    private int getNextRequirementId(){
+        int maxId =0;
+        for(TeachingRequirement req :requirements){
+            if(req.getId() >maxId){
+                maxId= req.getId();
+            }
+        }
+        return maxId +1;
     }
 }

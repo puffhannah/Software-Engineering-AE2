@@ -43,6 +43,27 @@ public class TeacherManager {
         return inst;
     }
 
+    // Add new teacher to the system
+    public boolean addTeacher(Teacher teacher) {
+        if (teacher == null) {
+            System.out.println("Cannot add a null teacher.");
+            return false;
+        }
+        // Handle edge case of duplicate IDs
+        for (Teacher t : teachers) {
+            if (t.getId() == teacher.getId()) {
+                System.out.println("Teacher ID already exists in the system.");
+                return false;
+            }
+        }
+        teachers.add(teacher);
+        // Save updated list to CSV
+        FileHandler.saveTeachers("teacher.csv", teachers);
+        // Success message feedback to user
+        System.out.println("New teacher added successfully.");
+        return true;
+    }
+    
     // Return full list of teachers
     public List<Teacher> getAllTeachers() {
         if (teachers == null || teachers.isEmpty()) {

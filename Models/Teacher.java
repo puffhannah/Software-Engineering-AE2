@@ -1,4 +1,5 @@
-package Models;//getName() returns name
+package Models;
+//getName() returns name
 
 //setName(String name) sets name 
 
@@ -40,8 +41,8 @@ public class Teacher {
     }
 
     public String getName(){return name;}
-    public void tName(String name){this.name=name;}
-    public int getid(){return id;}
+    public void setName(String name){this.name=name;}
+    public int getId(){return id;}
     public String getTrainingStatus(){return training_status;}
     public void setTrainingStatus(String status){this.training_status= status;}
     public String getSkills(){return skills;}

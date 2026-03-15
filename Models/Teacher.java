@@ -40,7 +40,7 @@ public class Teacher {
     }
 
     public String getName(){return name;}
-    public void getName(String name){this.name=name;}
+    public void setName(String name){this.name=name;}
     public int getid(){return id;}
     public String getTrainingStatus(){return training_status;}
     public void setTrainingStatus(String status){this.training_status= status;}

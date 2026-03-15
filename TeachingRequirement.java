@@ -30,13 +30,13 @@ public class TeachingRequirement {
     public String getCourseName() {
         return courseName;
     }
-    public String setCourseName(String name) {
+    public void setCourseName(String name) {
         this.courseName = name;
     }
     public String getSkillsNeeded() {
         return skillsNeeded;
     }
-    public String setSkillsNeeded(String needed) {
+    public void setSkillsNeeded(String needed) {
         this.skillsNeeded = skills;
     }
     public int getHours() {

@@ -1,4 +1,4 @@
-//getName() returns name 
+package Models;//getName() returns name
 
 //setName(String name) sets name 
 

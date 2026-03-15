@@ -20,7 +20,7 @@ public class RequirementsManager {
         requirements = new ArrayList<>();
     }
     public void addRequirement(TeachingRequirement req) {
-        if (req == nill){
+        if (req == null){
             return;
         }
     }
@@ -29,7 +29,7 @@ public class RequirementsManager {
     }
     public TeachingRequirement getRequirement(int id){
         for(TeachingRequirement req : requirements){
-            if (req.getID()==id){
+            if (req.getId()==id){
                 return req;
             }
         }

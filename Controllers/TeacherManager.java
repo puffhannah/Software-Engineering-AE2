@@ -45,14 +45,13 @@ public class TeacherManager {
 
     // Add new teacher to the system
     public boolean addTeacher(Teacher teacher) {
+        // Handle edge case of null teacher
         if (teacher == null) {
-            System.out.println("Cannot add a null teacher.");
             return false;
         }
         // Handle edge case of duplicate IDs
         for (Teacher t : teachers) {
             if (t.getId() == teacher.getId()) {
-                System.out.println("Teacher ID already exists in the system.");
                 return false;
             }
         }

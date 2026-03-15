@@ -105,7 +105,11 @@ public class CommandLineInterface {
     }
 
     private void optionAddTeacher() {
-
+        // Incomplete code here, just put stuff that TeacherManager needs
+        boolean success = teacherManager.addTeacher(newTeacher);
+        if (!success) {
+            System.out.println("Teacher ID already exists in the system. Failed to add teacher.");
+        }
     }
 
     private void optionUpdateTeacher(){

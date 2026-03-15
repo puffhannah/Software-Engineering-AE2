@@ -1,4 +1,4 @@
-//getName() returns name 
+package Models;//getName() returns name
 
 //setName(String name) sets name 
 
@@ -32,7 +32,7 @@ public class Teacher {
     }
     public Teacher(int id, String name, String skills, String trainingstatus){
         this.id= id;
-        if (id>= assignedid) assignedid = id +1;
+        if (id>= assignedid) assignedid = id +1; // so each teacher has its own ID 
         this.name=name;
         this.skills=skills;
         this.training_status=trainingstatus;
@@ -40,16 +40,16 @@ public class Teacher {
     }
 
     public String getName(){return name;}
-    public String setName(String name){this.name=name;}
+    public void setName(String name){this.name=name;}
     public int getid(){return id;}
     public String getTrainingStatus(){return training_status;}
     public void setTrainingStatus(String status){this.training_status= status;}
     public String getSkills(){return skills;}
-    public String setSkills(String skills){this.skills=skills;}
+    public void setSkills(String skills){this.skills=skills;}
     
     @Override
     public String toString(){
-        return String.format("[ID %d]%s,| Skills %s| Training Status %s",id,skills,training_status);
+        return String.format("[ID %d]%s,| Name %s| Skills %s| Training Status %s",id,name,skills,training_status);
     }
 
 

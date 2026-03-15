@@ -1,8 +1,10 @@
+package Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
-*RequirementsManager class consists:
+*Utils.RequirementsManager class consists:
 *-addRequirement(TeachingRequirement req): adds a new requirement to the list
 *-getAllRequirements(): returns the full list
 *-getRequirement(int id): returns one specific requirement

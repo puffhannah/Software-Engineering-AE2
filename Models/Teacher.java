@@ -33,7 +33,7 @@ public class Teacher {
     }
     public Teacher(int id, String name, String skills, String trainingstatus){
         this.id= id;
-        if (id>= assignedid) assignedid = id +1;
+        if (id>= assignedid) assignedid = id +1; // so each teacher has its own ID 
         this.name=name;
         this.skills=skills;
         this.training_status=trainingstatus;

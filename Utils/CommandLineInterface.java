@@ -5,19 +5,19 @@ import Models.Teacher;
 
 public class CommandLineInterface {
     // Placeholders until all of the actual methods are ready to be added to the list
-    static void option1() { System.out.println("Option 1 executed"); }
-    static void option2() { System.out.println("Option 2 executed"); }
-    static void option3() { System.out.println("Option 3 executed"); }
-    static void option4() { System.out.println("Option 4 executed"); }
-    static void option5() { System.out.println("Option 5 executed"); }
-    static void option6() { System.out.println("Option 6 executed"); }
-    static void option7() { System.out.println("Option 7 executed"); }
+    void option1() { System.out.println("Option 1 executed"); }
+    void option2() { System.out.println("Option 2 executed"); }
+    void option3() { System.out.println("Option 3 executed"); }
+    void option4() { System.out.println("Option 4 executed"); }
+    void option5() { System.out.println("Option 5 executed"); }
+    void option6() { System.out.println("Option 6 executed"); }
+    void option7() { System.out.println("Option 7 executed"); }
 
     public void start() {
 
     }
 
-    public static int showMainMenu() {
+    public int showMainMenu() {
         Scanner menuOption = new Scanner(System.in);
         String menu = """
         ===== Main Menu =====
@@ -54,33 +54,62 @@ public class CommandLineInterface {
 
     }
 
-    public static void runSelection(int selection) {
+    public void runSelection(int selection) {
         Runnable[] actions = new Runnable[] {
-                CommandLineInterface::option1,
-                CommandLineInterface::option2,
-                CommandLineInterface::option3,
-                CommandLineInterface::option4,
-                CommandLineInterface::option5,
-                CommandLineInterface::option6,
-                CommandLineInterface::option7,
-                CommandLineInterface::viewTeacherProfile,
+                this::optionViewRequierements,
+                this::optionViewTeachers,
+                this::optionCreateRequirement,
+                this::optionEditRequirement,
+                this::optionAddTeacher,
+                this::optionUpdateTeacher,
+                this::optionAssignTeacher,
+                this::viewTeacherProfile,
         };
 
         actions[selection-1].run();
     }
 
-    public static void viewTeacherProfile() {
+    private void optionViewRequierements() {
+
+    }
+
+    private void optionViewTeachers() {
+
+    }
+
+    private void optionCreateRequirement() {
+
+    }
+
+    private void optionEditRequirement() {
+
+    }
+
+    private void optionAddTeacher() {
+
+    }
+
+    private void optionUpdateTeacher(){
+
+    }
+
+    private void optionAssignTeacher() {
+
+    }
+
+    private void viewTeacherProfile() {
         Scanner getTeacherID = new Scanner(System.in);
         System.out.println("Enter the ID of the teacher profile you would like to view.");
         String  teacherID = getTeacherID.nextLine().trim();
 
         //Assuming this code will work once teacher manager class is completed
-        Teacher teacher = getTeacher(teacherID);
+        Teacher teacher = TeachersManager.getTeacher(teacherID);
 
         System.out.println(teacher);
 
 
     }
+
 
 }
 

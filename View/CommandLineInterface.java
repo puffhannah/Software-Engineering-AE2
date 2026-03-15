@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Scanner;
 import Models.Teacher;
 import Models.TeachingRequirement;
-import Utils.RequirementsManager;
-import Utils.TeacherManager;
+import Controllers.RequirementsManager;
+import Controllers.TeacherManager;
 
 public class CommandLineInterface {
     private Scanner scanner = new Scanner(System.in);

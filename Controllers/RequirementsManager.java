@@ -1,26 +1,30 @@
-package Utils;
+package Controllers;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import Models.Teacher;
+import Models.TeachingRequirement;
+
 /**
-*Utils.RequirementsManager class consists:
-*-addRequirement(TeachingRequirement req): adds a new requirement to the list
-*-getAllRequirements(): returns the full list
-*-getRequirement(int id): returns one specific requirement
-*-updateRequirement(int id, TeachingRequirement updated): edits an existing requirement
-*-assignTeacher(int reqId, Teacher teacher): links a teacher to a requirement
- * I am relying on TeachingRequirement consisting the collowing methods:
- * getId(), getCourseName(), getSkillsNeeded(), getHours(), setCourseName(), setSkillsNeeded(), setHours(),
- * and setAssignedTeacher()
+ * Utils.RequirementsManager class consists:
+ * -addRequirement(TeachingRequirement req): adds a new requirement to the list
+ * -getAllRequirements(): returns the full list
+ * -getRequirement(int id): returns one specific requirement
+ * -updateRequirement(int id, TeachingRequirement updated): edits an existing requirement
+ * -assignTeacher(int reqId, Teacher teacher): links a teacher to a requirement
+ * -I am relying on TeachingRequirement consisting the collowing methods:
+ * -getId(), getCourseName(), getSkillsNeeded(), getHours(), setCourseName(), setSkillsNeeded(), setHours(),
+ * -and setAssignedTeacher()
  */
+
 public class RequirementsManager {
     private List<TeachingRequirement> requirements;
     public RequirementsManager() {
         requirements = new ArrayList<>();
     }
     public void addRequirement(TeachingRequirement req) {
-        if (req == nill){
+        if (req == null){
             return;
         }
     }
@@ -29,7 +33,7 @@ public class RequirementsManager {
     }
     public TeachingRequirement getRequirement(int id){
         for(TeachingRequirement req : requirements){
-            if (req.getID()==id){
+            if (req.getId()==id){
                 return req;
             }
         }

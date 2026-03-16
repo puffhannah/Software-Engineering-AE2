@@ -16,7 +16,7 @@ public class FileHandler {
     //reads teachers from a CSV file and returns them as a list.
     //each line has format: id,name,skills,trainingStatus
 
-    public List<Teacher> loadTeachers(String filepath) {
+    public static List<Teacher> loadTeachers(String filepath) {
         List<Teacher> teachers = new ArrayList<>();
         File file = new File(filepath);
 
@@ -104,7 +104,7 @@ public class FileHandler {
     //writes all teachers to a CSV file.
     //format: id,name,skills,trainingStatus
     
-    public void saveTeachers(String filepath, List<Teacher> teachers) {
+    public static void saveTeachers(String filepath, List<Teacher> teachers) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filepath))) {
             //write a header comment so the file is human-readable
             writer.write("# id,name,skills,trainingStatus");

@@ -26,10 +26,10 @@ public class CommandLineInterface {
     // void option7() { System.out.println("Option 7 executed"); }
 
     public void start() {
-    while (true) {
-        int choice = showMainMenu();
-        if (choice == 9) break;  // or add an exit option
-        runSelection(choice);
+        while (true) {
+            int choice = showMainMenu();
+            if (choice == 9) break;  // or add an exit option
+            runSelection(choice);
         }
     }
 
@@ -93,18 +93,72 @@ public class CommandLineInterface {
     }
 
     private void optionViewTeachers() {
-
+        List<Teacher> teachers = teacherManager.getAllTeachers();
+        if (teacher ==null || teachers.isEmpty()){
+            System.out.println(("Teacher not found.");
+            return;
+        }
+        for (Teacher teacher : teachers){
+            System.out.println(teacher);
+        }
     }
 
     private void optionCreateRequirement() {
+        System.out.println("Enter course name: ");
+        String courseName = scanner.nextLine().trim();
+
+        System.out.println("Enter skills needed: ");
+        String skillsNeeded = scanner.nextLine().trim();
+
+        System.out.println("Enter hours: ");
+        int hours = Integer.parseInt(scanner.nextLine().trim());
+
+        TeachingRequirement newRequirement = requirementsManager.addRequirement(
+                courseName, skillsNeeded, hours);
+
+        System.out.println("Requirement created successfully.");
+        System.out.println(newRequirement);
 
     }
 
     private void optionEditRequirement() {
+        System.out.println("Enter the requirement ID you would like to edit: ");
+        int id = Integer.parseInt(scanner.nextLine().trim());
 
+        TeachingRequirement existingReq = requirementsManager.getRequirement(id);
+
+        if (existingReq == null) {
+            System.out.println("Requirement not found.");
+            return;
+        }
+        System.out.println("Enter mew course name: ");
+        String courseName = scanner.nextLine().trim();
+
+        System.out.println("Enter new skills needed: ");
+        String skillsNeeded = scanner.nextLine().trim();
+
+        System.out.println("Enter new hours: ");
+        int hours = Integer.parseInt(scanner.nextLine().trim());
+
+        TeachingRequirement updateReq = new TeachingRequirement(id, courseName, skillsNeeded, hours);
+
+        requirementsManager.updatedRequirement(id, updatedReq);
+
+        System.out.println("Requirement updated successfully");
     }
 
     private void optionAddTeacher() {
+        System.out.println("Enter teacher name: ");
+        String name = scanner.nextLine().trim();
+
+        System.out.println("Enter teacher skills: ");
+        String skills = scanner.nextLine().trim();
+
+        System.out.println("Enter teaacher teaching status: ");
+        String trainingStatus = scanner.nextLine().trim();
+
+        Teacher updateTeacher = new Teacher(id, name, skills, trainingStatus);
+
         // Incomplete code here, just put stuff that TeacherManager needs
         boolean success = teacherManager.addTeacher(newTeacher);
         if (!success) {
@@ -118,7 +172,22 @@ public class CommandLineInterface {
 
     private void optionUpdateTeacher(){
         System.out.println("Enter the ID of the teacher profile you would like to UPDATE: ");
-        // This is incomplete, just put logics that TeacherManager class needs (esp the booleans)
+        int id = Integer.parseInt(scanner.nextLine().trim());
+
+        Teacher existingTeacher = teacherManager.getTeacher(id);
+        if (existingTeacher == null) {
+            System.out.println("Teacher profile not found.Update not successful.");
+            return;
+        }
+        System.out.println("Enter new name: ");
+        String name = scanner.nextLine().trim();
+
+        System.out.println("Enter new skill: ");
+        String skills = scanner.nextLine().trim();
+
+        System.out.println("Enter new training status: ");
+        String trainingStatus = scanner.nextLine().trim();
+
         Teacher updatedTeacher = new Teacher(id, name, skills, trainingStatus);
         boolean success = teacherManager.updateTeacher(id, updatedTeacher);
         if (success) {
@@ -129,8 +198,29 @@ public class CommandLineInterface {
         }
     }
 
-    private void optionAssignTeacher() {
 
+
+    private void optionAssignTeacher() {
+        System.out.println("Enter Requirement ID: ");
+        int reqId = Integer.parseInt(scanner.nextLine().trim());
+
+        TeachingRequirement req = requirementsManager.getRequirement(reqId);
+        if (req == null) {
+            System.out.println("Requirement ID not found.");
+            return;
+        }
+        System.out.println("Enter Teacher ID: ");
+        int teacherId = Integer.parseInt(scanner.nextLine().trim());
+
+        Teacher teacher = teacherManager.getTeacher(teacherId);
+        if (teacher == null) {
+            System.out.println("Teacher not found.");
+            return;
+        }
+        requirementsManager.assignTeacher(reqId, teacher);
+
+        System.out.println("Teacher assigned successfully.");
+        System.out.println(requirementsManager.getRequirement(reqId));
     }
 
     private void viewTeacherProfile() {
@@ -141,19 +231,11 @@ public class CommandLineInterface {
         int id = Integer.parseInt(teacherID);
         Teacher teacher = teacherManager.getTeacher(id);
 
-        System.out.println(teacher);
-
         if (teacher == null) {
             System.out.println("Teacher not found.");
             }
         else {
             System.out.println(teacher);
         }
-
     }
-
-
 }
-
-
-

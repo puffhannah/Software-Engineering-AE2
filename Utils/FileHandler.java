@@ -53,7 +53,7 @@ public class FileHandler {
     }
 
     //we need the teacher list so we can link assigned teachers to requirements.
-    public List<TeachingRequirement> loadRequirements(String filepath, List<Teacher> teachers) {
+    public static List<TeachingRequirement> loadRequirements(String filepath, List<Teacher> teachers) {
         List<TeachingRequirement> requirements = new ArrayList<>();
         File file = new File(filepath);
 
@@ -127,7 +127,7 @@ public class FileHandler {
     //writes all teaching requirements to a CSV file.
     //format: id,courseName,skillsNeeded,hours,assignedTeacherId
      
-    public void saveRequirements(String filepath, List<TeachingRequirement> requirements) {
+    public static void saveRequirements(String filepath, List<TeachingRequirement> requirements) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filepath))) {
             writer.write("# id,courseName,skillsNeeded,hours,assignedTeacherId");
             writer.newLine();

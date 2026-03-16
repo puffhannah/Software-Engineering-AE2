@@ -1,4 +1,5 @@
 package Models;
+import Models.Teacher;
 //getName() returns name
 
 //setName(String name) sets name 

@@ -2,7 +2,7 @@ package Controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import Utils.FileHandler;
 import Models.Teacher;
 import Models.TeachingRequirement;
 
@@ -17,10 +17,18 @@ import Models.TeachingRequirement;
  * getId(), getCourseName(), getSkillsNeeded(), getHours(), setCourseName(), setSkillsNeeded(), setHours(),
  * and setAssignedTeacher()
  */
-public class RequirementsManager {
+public class RequirementsManager{
+    private static final String FILE_PATH = "requirements.csv"; // stores in one spot
     private List<TeachingRequirement> requirements;
-    public RequirementsManager() {
-        requirements = new ArrayList<>();
+
+    //allows me to use new RequirementManger in Main.java
+    public RequirementsManager(List<Teacher> teachers) {
+        requirements = FileHandler.loadRequirements(FILE_PATH, teachers);// loads requirement
+        if (requirements == null) {
+            requirements = new ArrayList<>();
+        }
+    }
+    // rest of the methods...
     }
     public void addRequirement(TeachingRequirement req) {
         if (req == null){

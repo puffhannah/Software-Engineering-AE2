@@ -5,9 +5,10 @@ import java.util.List;
 
 import Models.Teacher;
 import Models.TeachingRequirement;
+import Utils.FileHandler;
 
 /**
-*Utils.RequirementsManager class consists:
+*Controllers.RequirementsManager class consists:
 *-addRequirement(TeachingRequirement req): adds a new requirement to the list
 *-getAllRequirements(): returns the full list
 *-getRequirement(int id): returns one specific requirement
@@ -19,8 +20,16 @@ import Models.TeachingRequirement;
  */
 public class RequirementsManager {
     private List<TeachingRequirement> requirements;
+    private final FileHandler fileHandler;
+    private static final String Requirement_File = "data/requirements.csv";
     public RequirementsManager() {
-        requirements = new ArrayList<>();
+        fileHandler = new FileHandler();
+        TeacherManager teacherManager = TeacherManager.getInstance();
+        List<Teacher> teachers = teacherManager.getAllTeachers();
+        requirements = fileHandler.loadRequirements(Requirement_File, teachers);
+        if (requirements == null){
+            requirements = new ArrayList<>();
+        }
     }
     public void addRequirement(TeachingRequirement req) {
         if (req ==null){
@@ -37,6 +46,7 @@ public class RequirementsManager {
         }
         if(getRequirement(req.getId()) ==null){
             requirements.add(req);
+            fileHandler.saveRequirements(Requirement_File, requirements);
         }
     }
     public TeachingRequirement addRequirement(String courseName, String skillsNeeded, int hours) {
@@ -83,6 +93,7 @@ public class RequirementsManager {
             existing.setCourseName(updated.getCourseName());
             existing.setSkillsNeeded(updated.getSkillsNeeded());
             existing.setHours(updated.getHours());
+            fileHandler.saveRequirements(Requirement_File, requirements);
         }
     }
     public void assignTeacher(int reqId, Teacher teacher){
@@ -92,6 +103,7 @@ public class RequirementsManager {
         TeachingRequirement requirement = getRequirement(reqId);
         if(requirement!=null){
             requirement.setAssignedTeacher(teacher);
+            fileHandler.saveRequirements(Requirement_File, requirements);
         }
     }
     //added this to find the next available Id.

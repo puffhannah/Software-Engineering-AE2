@@ -23,7 +23,16 @@ public class RequirementsManager {
         requirements = new ArrayList<>();
     }
     public void addRequirement(TeachingRequirement req) {
-        if (req == null){
+        if (req ==null){
+            return;
+        }
+        if (req.getCourseName() ==null || req.getCourseName().trim().isEmpty()) {
+            return;
+        }
+        if (req.getSkillsNeeded() ==null || req.getSkillsNeeded().trim().isEmpty()) {
+            return;
+        }
+        if (req.getHours() <= 0) {
             return;
         }
         if(getRequirement(req.getId()) ==null){
@@ -31,6 +40,15 @@ public class RequirementsManager {
         }
     }
     public TeachingRequirement addRequirement(String courseName, String skillsNeeded, int hours) {
+        if (courseName ==null || courseName.trim().isEmpty()){
+            return null;
+        }
+        if (skillsNeeded ==null || skillsNeeded.trim().isEmpty()){
+            return null;
+        }
+        if (hours <= 0){
+            return null;
+        }
         int newId = getNextRequirementId();
         TeachingRequirement req = new TeachingRequirement(newId, courseName, skillsNeeded, hours);
         addRequirement(req);
@@ -51,6 +69,15 @@ public class RequirementsManager {
         if (updated == null){
             return;
         }
+        if (updated.getCourseName() ==null || updated.getCourseName().trim().isEmpty()){
+            return;
+        }
+        if (updated.getSkillsNeeded() ==null || updated.getSkillsNeeded().trim().isEmpty()){
+            return;
+        }
+        if (updated.getHours() <= 0){
+            return;
+        }
         TeachingRequirement existing = getRequirement(id);
         if (existing != null){
             existing.setCourseName(updated.getCourseName());
@@ -59,6 +86,9 @@ public class RequirementsManager {
         }
     }
     public void assignTeacher(int reqId, Teacher teacher){
+       if (teacher == null){
+            return;
+       }
         TeachingRequirement requirement = getRequirement(reqId);
         if(requirement!=null){
             requirement.setAssignedTeacher(teacher);

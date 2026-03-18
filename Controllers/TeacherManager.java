@@ -1,7 +1,7 @@
 package Controllers;
 
-import Utils.FileHandler;
-import Models.Teacher;
+import Entitystore.FileHandler;
+import Entities.Teacher;
 import java.util.ArrayList;
 import java.util.List;
 

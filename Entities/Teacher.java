@@ -1,4 +1,4 @@
-package Models;
+package Entities;
 
 /**
  * Represents a teacher with name, skills, and training status.

@@ -1,6 +1,6 @@
 import Controllers.RequirementsManager;
 import Controllers.TeacherManager;
-import View.CommandLineInterface;
+import Boundary.CommandLineInterface;
 /**
  * Entry point for the Teacher‑Requirement Management System.
  * <p>

@@ -3,9 +3,9 @@ package Controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import Models.Teacher;
-import Models.TeachingRequirement;
-import Utils.FileHandler;
+import Entities.Teacher;
+import Entities.TeachingRequirement;
+import Entitystore.FileHandler;
 
 /**
  * Manages teaching requirements in the system.

@@ -1,9 +1,9 @@
-package View;
+package Boundary;
 
 import java.util.List;
 import java.util.Scanner;
-import Models.Teacher;
-import Models.TeachingRequirement;
+import Entities.Teacher;
+import Entities.TeachingRequirement;
 import Controllers.RequirementsManager;
 import Controllers.TeacherManager;
 

@@ -1,10 +1,10 @@
-package Utils;
+package Entitystore;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import Models.Teacher;
-import Models.TeachingRequirement;
+import Entities.Teacher;
+import Entities.TeachingRequirement;
 
 /**
  * Handles loading and saving of teacher and teaching requirement data to CSV files.

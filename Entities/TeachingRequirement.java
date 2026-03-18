@@ -1,4 +1,4 @@
-package Models;
+package Entities;
 
 /**
  * Represents a teaching requirement, including course name, required skills,

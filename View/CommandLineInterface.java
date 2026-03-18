@@ -7,20 +7,45 @@ import Models.TeachingRequirement;
 import Controllers.RequirementsManager;
 import Controllers.TeacherManager;
 
+/**
+ * Command‑line interface for interacting with the teacher and requirement management system.
+ * <p>
+ * Provides a menu‑driven interface that allows the user to:
+ * <ul>
+ *   <li>View all teaching requirements or teacher profiles</li>
+ *   <li>Create, edit, or delete requirements</li>
+ *   <li>Add or update teacher profiles</li>
+ *   <li>Assign a teacher to a requirement</li>
+ *   <li>View a specific teacher's profile</li>
+ * </ul>
+ * Input validation is performed to ensure data integrity.
+ */
 public class CommandLineInterface {
-    private Scanner scanner = new Scanner(System.in);
-    private RequirementsManager requirementsManager;
-    private TeacherManager teacherManager;
+    private final Scanner scanner;
+    private final RequirementsManager requirementsManager;
+    private final TeacherManager teacherManager;
 
+    /**
+     * Constructs a new CLI with the given managers.
+     *
+     * @param rm the manager for teaching requirements
+     * @param tm      the manager for teacher data
+     */
     public CommandLineInterface(RequirementsManager rm, TeacherManager tm) {
+        this.scanner = new Scanner(System.in);
         this.requirementsManager = rm;
         this.teacherManager = tm;
     }
 
-    //validation functions:
-    //readPositiveInt: check if input is a required positive int
-    //readOptionalPositiveInt: check if input is a positive int and optional e.g. to edit hours or just press enter for default
-    //readNonEmptyLine: When a value is required and not optional
+    // ==================== VALIDATION HELPERS ====================
+
+    /**
+     * Prompts the user and reads a positive integer.
+     * Keeps asking until a valid positive number is entered.
+     *
+     * @param prompt the message to display to the user
+     * @return the positive integer entered
+     */
     private int readPositiveInt(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -35,6 +60,15 @@ public class CommandLineInterface {
             }
         }
     }
+
+    /**
+     * Prompts the user for an optional positive integer.
+     * If the user enters nothing, the given default value is returned.
+     *
+     * @param prompt       the message to display
+     * @param defaultValue the value to return if input is empty
+     * @return the positive integer entered, or the default
+     */
     private int readOptionalPositiveInt(String prompt, int defaultValue) {
         while (true) {
             System.out.print(prompt);
@@ -53,6 +87,13 @@ public class CommandLineInterface {
             }
         }
     }
+
+    /**
+     * Prompts the user for a non‑empty string.
+     *
+     * @param prompt the message to display
+     * @return the trimmed input string (never empty)
+     */
     private String readNonEmptyLine(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -62,6 +103,13 @@ public class CommandLineInterface {
             System.out.println("This field cannot be empty.");
         }
     }
+
+    /**
+     * Presents a menu of training status options and returns the user's choice.
+     * If the user presses Enter with no input, an empty string is returned.
+     *
+     * @return the selected training status, or an empty string if no choice was made
+     */
     private String getTrainingStatus() {
         String[] trainingStatusOptions = new String[] {"Completed", "In Progress", "Not Started", "Unknown"};
 
@@ -90,6 +138,17 @@ public class CommandLineInterface {
         }
 
     }
+
+    /**
+     * Prompts the user to update a specific field of a teacher.
+     * Shows the current value in brackets. For the "training status" field,
+     * the {@link #getTrainingStatus()} method is used; otherwise a simple text input.
+     * If the user enters nothing, the existing value is kept.
+     *
+     * @param field         the name of the field being updated (used in prompt)
+     * @param existingValue the current value of the field
+     * @return the new value (or the existing value if input was empty)
+     */
     private String promptUpdateField(String field, String existingValue) {
 
         System.out.print("New " + field + " [" + existingValue + "]: ");
@@ -107,10 +166,14 @@ public class CommandLineInterface {
 
         return update;
 
-
-
     }
 
+    // ==================== MAIN MENU & LOOP ====================
+
+    /**
+     * Starts the main command‑line loop.
+     * Displays the menu, processes the user's choice, and repeats until exit.
+     */
     public void start() {
         while (true) {
             int choice = showMainMenu();
@@ -122,6 +185,11 @@ public class CommandLineInterface {
         }
     }
 
+    /**
+     * Displays the main menu and reads the user's selection.
+     *
+     * @return a number between 1 and 9 (inclusive) representing the chosen option
+     */
     public int showMainMenu() {
         String menu = """
         ===== Main Menu =====
@@ -158,6 +226,11 @@ public class CommandLineInterface {
 
     }
 
+    /**
+     * Executes the action corresponding to the given menu selection.
+     *
+     * @param selection the menu option (1‑8, as 9 is handled separately)
+     */
     public void runSelection(int selection) {
         Runnable[] actions = new Runnable[] {
                 this::optionViewRequirements,
@@ -173,6 +246,9 @@ public class CommandLineInterface {
         actions[selection-1].run();
     }
 
+    // ==================== MENU ACTIONS ====================
+
+    /** Displays all teaching requirements. */
     private void optionViewRequirements() {
         List<TeachingRequirement> reqs = requirementsManager.getAllRequirements();
         if (reqs ==null || reqs.isEmpty()){
@@ -185,6 +261,7 @@ public class CommandLineInterface {
         }
     }
 
+    /** Displays all teacher profiles. */
     private void optionViewTeachers() {
         List<Teacher> teachers = teacherManager.getAllTeachers();
 
@@ -198,6 +275,7 @@ public class CommandLineInterface {
         }
     }
 
+    /** Guides the user through creating a new teaching requirement. */
     private void optionCreateRequirement() {
         System.out.println("*** Create Requirement ***");
         String courseName = readNonEmptyLine("Enter course name: ");
@@ -213,6 +291,7 @@ public class CommandLineInterface {
         }
     }
 
+    /** Allows the user to edit an existing teaching requirement. */
     private void optionEditRequirement() {
         System.out.println("*** Edit Requirement ***");
         int id =  readPositiveInt("Enter requirement id to update: ");
@@ -224,20 +303,11 @@ public class CommandLineInterface {
         System.out.println("Current requirement:");
         System.out.println(existing);
         System.out.println("Leave a field blank to keep the current value.");
-        //course name
-        System.out.print("New course name [" + existing.getCourseName() + "]: ");
-        String courseName = scanner.nextLine().trim();
-        if (courseName.isEmpty()) {
-            courseName= existing.getCourseName();
-        }
-        //skills
-        System.out.print("New skills needed [" + existing.getSkillsNeeded() + "]: ");
-        String skillsNeeded = scanner.nextLine().trim();
-        if (skillsNeeded.isEmpty()) {
-            skillsNeeded= existing.getSkillsNeeded();
-        }
-        //hours
+
+        String courseName = promptUpdateField("course name", existing.getCourseName());
+        String skillsNeeded = promptUpdateField("skills needed", existing.getSkillsNeeded());
         int hours= readOptionalPositiveInt("New hours [" + existing.getHours() + "]: ", existing.getHours());
+
 
         TeachingRequirement updated= new TeachingRequirement(id, courseName, skillsNeeded, hours);
         requirementsManager.updateRequirement(id, updated);
@@ -245,6 +315,7 @@ public class CommandLineInterface {
         System.out.println(requirementsManager.getRequirement(id));
     }
 
+    /** Guides the user through adding a new teacher. */
     private void optionAddTeacher() {
         // (Done) Incomplete code here, just put stuff that TeacherManager needs
         // Edit: Added the logic to add new teacher
@@ -275,6 +346,7 @@ public class CommandLineInterface {
         }
     }
 
+    /** Allows the user to update an existing teacher's details. */
     private void optionUpdateTeacher(){
         System.out.println("*** Update Teacher ***");
         // System.out.println("Enter the ID of the teacher profile you would like to UPDATE: ");
@@ -305,6 +377,7 @@ public class CommandLineInterface {
         }
     }
 
+    /** Assigns a teacher to a teaching requirement. */
     private void optionAssignTeacher() {
         System.out.println("*** Assign Teacher to Requirement ***");
         int reqId= readPositiveInt("Enter requirement ID: ");
@@ -325,6 +398,7 @@ public class CommandLineInterface {
         System.out.println(requirementsManager.getRequirement(reqId));
     }
 
+    /** Displays the full profile of a single teacher. */
     private void viewTeacherProfile() {
         System.out.println("*** View Teacher Profile ***");
 
@@ -339,9 +413,6 @@ public class CommandLineInterface {
         }
 
     }
-
-
-
 
 }
 

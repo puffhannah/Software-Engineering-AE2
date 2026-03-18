@@ -44,7 +44,17 @@ public class Teacher {
         this.trainingStatus = trainingStatus;
 
     }
-
+    /**
+     * getName() returns name
+     * setName(String name) sets name
+     * getSkills() returns skills
+     * setSkills(String skills) sets skills
+     * getTrainingStatus() returns training status
+     * setTrainingStatus(String status) sets training status
+     * getId() returns the teacher's id
+     * toString() returns a readable summary
+     * all my initialized parameters name, skills, training_status, and id
+     */
     public String getName(){return name;}
     public void setName(String name){this.name=name;}
     public int getId(){return id;}

@@ -62,6 +62,54 @@ public class CommandLineInterface {
             System.out.println("This field cannot be empty.");
         }
     }
+    private String getTrainingStatus() {
+        String[] trainingStatusOptions = new String[] {"Completed", "In Progress", "Not Started", "Unknown"};
+
+        while (true) {
+            System.out.println("Enter training status:");
+            for (int i = 0; i < trainingStatusOptions.length; i++) {
+                System.out.println((i+1) + " - " + trainingStatusOptions[i]);
+            }
+
+            System.out.print("Enter choice (1-" + trainingStatusOptions.length + "): ");
+
+            String input = scanner.nextLine();
+            if (input.trim().isEmpty()) {
+                return "";
+            }
+
+            try {
+                int choice = Integer.parseInt(input.trim());
+                if (choice >= 1 && choice <= trainingStatusOptions.length) {
+                    return trainingStatusOptions[choice - 1];
+                }
+            } catch (NumberFormatException ignored) {}
+            //int choice = Integer.parseInt(readNonEmptyLine("Enter choice (1-" + trainingStatusOptions.length + "): "));
+
+            System.out.println("Invalid input. Please enter a number between 1 and " + trainingStatusOptions.length + ", or press Enter to leave blank.");
+        }
+
+    }
+    private String promptUpdateField(String field, String existingValue) {
+
+        System.out.print("New " + field + " [" + existingValue + "]: ");
+        String update;
+        if (field.equals("training status")) {
+            update = getTrainingStatus();
+        }
+        else {
+            update = scanner.nextLine().trim();
+        }
+
+        if (update.isEmpty()){
+            update = existingValue;
+        }
+
+        return update;
+
+
+
+    }
 
     public void start() {
         while (true) {
@@ -203,7 +251,18 @@ public class CommandLineInterface {
         System.out.println("*** Add Teacher ***");
         String name = readNonEmptyLine("Enter teacher name: ");
         String skills = readNonEmptyLine("Enter teacher skills: ");
-        String trainingStatus = readNonEmptyLine("Enter training status: ");
+        String trainingStatus;
+
+        while (true) {
+            trainingStatus = getTrainingStatus();
+            if (trainingStatus.isEmpty()) {
+                System.out.println("You must enter the teacher's training status.");
+                continue;
+            }
+            break;
+        }
+
+
         Teacher newTeacher = new Teacher(name, skills, trainingStatus);
         boolean success = teacherManager.addTeacher(newTeacher);
         if (!success) {
@@ -230,24 +289,10 @@ public class CommandLineInterface {
         System.out.println("Current teacher profile:");
         System.out.println(existingTeacher);
         System.out.println("Leave a field blank to keep the current value.");
-        //add name here
-        System.out.print("New name [" + existingTeacher.getName() + "]: ");
-        String name = scanner.nextLine().trim();
-        if (name.isEmpty()){
-            name= existingTeacher.getName();
-        }
-        //add skills here
-        System.out.print("New skills [" + existingTeacher.getSkills() + "]: ");
-        String skills = scanner.nextLine().trim();
-        if (skills.isEmpty()){
-            skills= existingTeacher.getSkills();
-        }
-        //add training status here
-        System.out.print("New training status [" + existingTeacher.getTrainingStatus() + "]: ");
-        String trainingStatus = scanner.nextLine().trim();
-        if (trainingStatus.isEmpty()){
-            trainingStatus= existingTeacher.getTrainingStatus();
-        }
+
+        String name = promptUpdateField("name", existingTeacher.getName());
+        String skills = promptUpdateField("skills", existingTeacher.getSkills());
+        String trainingStatus = promptUpdateField("training status", existingTeacher.getTrainingStatus());
 
         Teacher updatedTeacher = new Teacher(id, name, skills, trainingStatus);
         boolean success = teacherManager.updateTeacher(id, updatedTeacher);
@@ -286,8 +331,6 @@ public class CommandLineInterface {
         int id = readPositiveInt("Enter the ID of the teacher profile you would like to view: ");
         Teacher teacher = teacherManager.getTeacher(id);
 
-//        System.out.println(teacher);
-
         if (teacher == null) {
             System.out.println("Teacher not found.");
             }
@@ -296,6 +339,8 @@ public class CommandLineInterface {
         }
 
     }
+
+
 
 
 }

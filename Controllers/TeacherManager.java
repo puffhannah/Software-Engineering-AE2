@@ -57,7 +57,7 @@ public class TeacherManager {
         }
         teachers.add(teacher);
         // Save updated list to CSV
-        FileHandler.saveTeachers("teachers.csv", teachers);
+        FileHandler.saveTeachers("data/teachers.csv", teachers);
         return true;
     }
     

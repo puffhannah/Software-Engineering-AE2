@@ -16,14 +16,6 @@ public class CommandLineInterface {
         this.requirementsManager = rm;
         this.teacherManager = tm;
     }
-    // Placeholders until all of the actual methods are ready to be added to the list
-    // void option1() { System.out.println("Option 1 executed"); }
-    // void option2() { System.out.println("Option 2 executed"); }
-    // void option3() { System.out.println("Option 3 executed"); }
-    // void option4() { System.out.println("Option 4 executed"); }
-    // void option5() { System.out.println("Option 5 executed"); }
-    // void option6() { System.out.println("Option 6 executed"); }
-    // void option7() { System.out.println("Option 7 executed"); }
 
     //validation functions:
     //readPositiveInt: check if input is a required positive int

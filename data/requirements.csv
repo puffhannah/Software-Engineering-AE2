@@ -1,5 +1,7 @@
 # id,courseName,skillsNeeded,hours,assignedTeacherId
-1,Intro to Programming,Java Programming,20,1
+1,Intro to Programming,Java Programming,20,-1
 2,Database Fundamentals,Database Systems,15,-1
-3,Web App Development,Web Development,25,-1
-4,Software Quality Assurance,Software Testing,10,4
+3,change,Web Development,25,-1
+4,Software Quality Assurance,Software Testing,10,-1
+5,Cybersecurity Fundamentals,Cryptography,9,6
+6,Programming,Python,8,6

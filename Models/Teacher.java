@@ -50,7 +50,7 @@ public class Teacher {
     
     @Override
     public String toString(){
-        return String.format("[ID %d]%s,| Name %s| Skills %s| Training Status %s",id,name,skills,training_status);
+        return String.format("[ID %s] | Name: %s | Skills: %s | Training Status: %s",id,name,skills,training_status);
     }
 
 

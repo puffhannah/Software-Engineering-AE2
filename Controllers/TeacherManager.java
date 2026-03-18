@@ -29,7 +29,7 @@ public class TeacherManager {
 
     // Private Contructor
     private TeacherManager() {
-        teachers = FileHandler.loadTeachers("teachers.csv");
+        teachers = FileHandler.loadTeachers("data/teachers.csv");
         if (teachers == null) {
             teachers = new ArrayList<>();
         }

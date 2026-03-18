@@ -6,16 +6,29 @@ import java.util.List;
 import Models.Teacher;
 import Models.TeachingRequirement;
 
-//file format for teachers: id,name,skills,trainingStatus
-//file format for requirements: id,courseName,skillsNeeded,hours,assignedTeacherId
-//(assignedTeacherId is -1 if no teacher is assigned)
-
+/**
+ * Handles loading and saving of teacher and teaching requirement data to CSV files.
+ * <p>
+ * File formats:
+ * <ul>
+ *   <li>Teachers CSV: {@code id,name,skills,trainingStatus}</li>
+ *   <li>Requirements CSV: {@code id,courseName,skillsNeeded,hours,assignedTeacherId}</li>
+ * </ul>
+ * The {@code assignedTeacherId} field is {@code -1} if no teacher is assigned.
+ */
 public class FileHandler {
 
-    //LOADING
-    //reads teachers from a CSV file and returns them as a list.
-    //each line has format: id,name,skills,trainingStatus
+    // ==================== LOADING METHODS ====================
 
+    /**
+     * Reads teachers from a CSV file and returns them as a list.
+     * The file format is expected to be: {@code id,name,skills,trainingStatus}.
+     * Lines starting with '#' are treated as comments and ignored.
+     * If the file does not exist, an empty list is returned and a message is printed.
+     *
+     * @param filepath the path to the teachers CSV file
+     * @return a list of Teacher objects loaded from the file, or an empty list if the file is missing or unreadable
+     */
     public static List<Teacher> loadTeachers(String filepath) {
         List<Teacher> teachers = new ArrayList<>();
         File file = new File(filepath);
@@ -52,7 +65,17 @@ public class FileHandler {
         return teachers;
     }
 
-    //we need the teacher list so we can link assigned teachers to requirements.
+    /**
+     * Reads teaching requirements from a CSV file and returns them as a list.
+     * The file format is expected to be: {@code id,courseName,skillsNeeded,hours,assignedTeacherId}.
+     * Lines starting with '#' are treated as comments and ignored.
+     * If a valid teacher ID is present, the corresponding Teacher object is linked using the provided teacher list.
+     * If the file does not exist, an empty list is returned and a message is printed.
+     *
+     * @param filepath the path to the requirements CSV file
+     * @param teachers the list of all teachers (used to resolve assigned teacher references)
+     * @return a list of TeachingRequirement objects loaded from the file, or an empty list if the file is missing or unreadable
+     */
     public List<TeachingRequirement> loadRequirements(String filepath, List<Teacher> teachers) {
         List<TeachingRequirement> requirements = new ArrayList<>();
         File file = new File(filepath);
@@ -100,10 +123,16 @@ public class FileHandler {
         return requirements;
     }
 
-    //SAVING 
-    //writes all teachers to a CSV file.
-    //format: id,name,skills,trainingStatus
-    
+    // ==================== SAVING METHODS ====================
+
+    /**
+     * Writes all teachers to a CSV file.
+     * The file format is: {@code id,name,skills,trainingStatus}.
+     * A header comment line is written first for readability.
+     *
+     * @param filepath the path to the teachers CSV file
+     * @param teachers the list of Teacher objects to save
+     */
     public static void saveTeachers(String filepath, List<Teacher> teachers) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filepath))) {
             //write a header comment so the file is human-readable
@@ -124,9 +153,15 @@ public class FileHandler {
         }
     }
 
-    //writes all teaching requirements to a CSV file.
-    //format: id,courseName,skillsNeeded,hours,assignedTeacherId
-     
+    /**
+     * Writes all teaching requirements to a CSV file.
+     * The file format is: {@code id,courseName,skillsNeeded,hours,assignedTeacherId}.
+     * A header comment line is written first for readability.
+     * If a teacher is assigned, the teacher's ID is stored; otherwise, {@code -1} is stored.
+     *
+     * @param filepath     the path to the requirements CSV file
+     * @param requirements the list of TeachingRequirement objects to save
+     */
     public void saveRequirements(String filepath, List<TeachingRequirement> requirements) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filepath))) {
             writer.write("# id,courseName,skillsNeeded,hours,assignedTeacherId");
@@ -152,9 +187,15 @@ public class FileHandler {
         }
     }
 
-    //HELPER
+    // ==================== HELPER METHODS ====================
 
-    //find a teacher by their id from a list/ return null
+    /**
+     * Finds a teacher by its ID from a list of teachers.
+     *
+     * @param teachers the list of Teacher objects to search
+     * @param id       the ID to look for
+     * @return the Teacher with the matching ID, or {@code null} if none found
+     */
     private Teacher findTeacherById(List<Teacher> teachers, int id) {
         for (Teacher teacher : teachers) {
             if (teacher.getId() == id) {

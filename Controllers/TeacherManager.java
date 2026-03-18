@@ -5,37 +5,45 @@ import Models.Teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-/* 
-
-This class is a Control object in BCE.
-
-1. Receive TeacherProfile request from CLI
-2. Load TeacherID to Teacher class
-3. Receive TeacherProfile object from Teacher
-4. Display Teacherprofile to CLI
-
-5. Receive TeacherProfileUpdate request from CLI
-6. Send updated Data to Teacher class
-7. Receive success status from Teacher
-8. Display the updated teacher profile to CLI
-
- */ 
-
+/**
+ * Manages all teacher-related operations in the system.
+ * <p>
+ * This controller class handles:
+ * <ul>
+ *   <li>Loading teacher data from persistent storage</li>
+ *   <li>Adding new teachers</li>
+ *   <li>Retrieving individual or all teachers</li>
+ *   <li>Updating existing teacher details</li>
+ *   <li>Saving changes back to storage</li>
+ * </ul>
+ * It follows the Singleton design pattern to ensure a single point of control
+ * throughout the application.
+ */
 public class TeacherManager {
     // Singleton Pattern (only one instance + need global access point)
     private static TeacherManager inst;
 
+    private static final String TEACHER_FILE = "data/teachers.csv";
     private List<Teacher> teachers;
 
-    // Private Contructor
+    /**
+     * Private constructor to prevent direct instantiation.
+     * Loads existing teacher data from the CSV file; if loading fails,
+     * initializes an empty list.
+     */
     private TeacherManager() {
-        teachers = FileHandler.loadTeachers("data/teachers.csv");
+        teachers = FileHandler.loadTeachers(TEACHER_FILE);
         if (teachers == null) {
             teachers = new ArrayList<>();
         }
     }
 
-    // Public Accessors here
+    /**
+     * Returns the singleton instance of TeacherManager.
+     * Creates the instance on the first call.
+     *
+     * @return the single TeacherManager instance
+     */
     public static TeacherManager getInstance() {
         if (inst == null) {
             inst = new TeacherManager();
@@ -43,25 +51,36 @@ public class TeacherManager {
         return inst;
     }
 
-    // Add new teacher to the system
+    /**
+     * Adds a new teacher to the system.
+     * Performs validation to prevent null teachers and duplicate IDs.
+     * If successful, the updated teacher list is saved to the CSV file.
+     *
+     * @param teacher the Teacher object to add
+     * @return true if the teacher was added successfully, false otherwise
+     */
     public boolean addTeacher(Teacher teacher) {
-        // Handle edge case of null teacher
         if (teacher == null) {
             return false;
         }
-        // Handle edge case of duplicate IDs
+
         for (Teacher t : teachers) {
             if (t.getId() == teacher.getId()) {
                 return false;
             }
         }
         teachers.add(teacher);
-        // Save updated list to CSV
-        FileHandler.saveTeachers("data/teachers.csv", teachers);
+
+        FileHandler.saveTeachers(TEACHER_FILE, teachers);
         return true;
     }
-    
-    // Return full list of teachers
+
+    /**
+     * Returns a list of all teachers currently in the system.
+     * If the list is empty or null, a message is printed to the console.
+     *
+     * @return the list of teachers (may be empty)
+     */
     public List<Teacher> getAllTeachers() {
         if (teachers == null || teachers.isEmpty()) {
             System.out.println("No teacher profile is found in the system."); // Handles edge case
@@ -69,18 +88,35 @@ public class TeacherManager {
         return teachers;
     }
 
-    // Fetch specific teacher with Teacher's ID
+
+    /**
+     * Retrieves a teacher by their unique ID.
+     * If no teacher with the given ID exists, a message is printed and null is returned.
+     *
+     * @param id the teacher ID to search for
+     * @return the Teacher object with the matching ID, or null if not found
+     */
     public Teacher getTeacher(int id) {
         for (Teacher t : teachers) {
             if (t.getId() == id) {
                 return t;
             }
         }
-        System.out.println("Unable to find teacher with ID: " + id); // Handles edge case
-        return null; // for case when ID does not exist
+        System.out.println("Unable to find teacher with ID: " + id);
+        return null;
     }
 
-    // Update teacher details
+    /**
+     * Updates the details of an existing teacher.
+     * The teacher to update is identified by the provided ID.
+     * Only the name, skills, and training status are updated from the
+     * {@code updated} parameter. After updating, the entire teacher list
+     * is saved to the CSV file.
+     *
+     * @param id      the ID of the teacher to update
+     * @param updated a Teacher object containing the new values
+     * @return true if the teacher was found and updated, false otherwise
+     */
     public boolean updateTeacher(int id, Teacher updated) {
         for (int i=0; i < teachers.size(); i++) {
             if (teachers.get(i).getId() == id) {
@@ -88,9 +124,9 @@ public class TeacherManager {
                 teacherToBeUpdated.setName(updated.getName());
                 teacherToBeUpdated.setSkills(updated.getSkills());
                 teacherToBeUpdated.setTrainingStatus(updated.getTrainingStatus());
-                FileHandler.saveTeachers("teachers.csv", teachers);
+                FileHandler.saveTeachers(TEACHER_FILE, teachers);
                 
-                return true; // do not remove, stops the loop upon data updated
+                return true;
             }
         }
         return false;
